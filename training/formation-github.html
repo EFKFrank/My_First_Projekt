@@ -449,7 +449,7 @@
 <div class="deck" id="deck">
   <header class="chrome">
     <div class="brand"><strong>git</strong> · formation débutants</div>
-    <div class="progress-label"><b id="slideNum">1</b> / 5</div>
+    <div class="progress-label"><b id="slideNum">1</b> / 6</div>
   </header>
 
   <div class="viewport" id="viewport">
@@ -611,6 +611,36 @@
           <li>Un conflit se résout en éditant les marqueurs <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">&lt;&lt;&lt;&lt;&lt;&lt;&lt; / ======= / &gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>, puis <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">git add</code> + <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">commit</code> (ou <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">rebase --continue</code>).</li>
           <li>Les <b>branch protection rules</b> imposent une CI verte et une revue approuvée avant de fusionner sur <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">main</code>.</li>
           <li>Un message de commit suit souvent une convention (<code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">type(scope): résumé</code>) pour un historique exploitable par les outils.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Slide 6 -->
+    <section class="slide">
+      <div class="slide-inner">
+        <p class="eyebrow">06 — Claude &amp; GitHub</p>
+        <h1 class="headline">Un collaborateur de plus dans le graphe de commits</h1>
+        <p class="lede">Claude Code utilise les mêmes primitives Git que vous — commits, branches, pull requests — via l'API GitHub, exposée sous forme d'outils MCP.</p>
+
+        <div class="card-grid cols-3">
+          <div class="term-card">
+            <span class="term">commit attribué</span>
+            <p class="def">Chaque commit de Claude porte un trailer <code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">Co-Authored-By</code> et un lien de session, pour une traçabilité complète dans <code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">git log</code>.</p>
+          </div>
+          <div class="term-card">
+            <span class="term">outils MCP GitHub</span>
+            <p class="def">Lecture et écriture du dépôt (branches, commits, PR, revues) exposées comme des appels d'API structurés, sans quitter la conversation.</p>
+          </div>
+          <div class="term-card">
+            <span class="term">veille sur PR</span>
+            <p class="def">Claude peut s'abonner aux événements d'une pull request (commentaires, échecs de CI) et réagir automatiquement.</p>
+          </div>
+        </div>
+
+        <ul class="checklist" style="margin-top: 1.1rem;">
+          <li>Les actions à risque (<b>force-push</b>, merge, suppression de branche) demandent toujours une confirmation explicite.</li>
+          <li>Une pull request ouverte par Claude suit le même template et les mêmes règles de revue que toute autre PR.</li>
+          <li>L'historique reste lisible : on peut toujours distinguer qui a écrit quoi, et pourquoi.</li>
         </ul>
       </div>
     </section>
