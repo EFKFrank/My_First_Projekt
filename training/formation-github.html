@@ -1,505 +1,334 @@
+<meta charset="utf-8">
 <title>Formation GitHub — Notions de base</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
 <style>
-  @font-face {
-    font-family: 'system-serif-fallback';
-    src: local('Iowan Old Style');
-  }
-
   :root {
-    --ink: #16211d;
-    --ink-soft: #48544d;
-    --ink-faint: #6f7a72;
-    --paper: #f1f3ef;
-    --paper-raised: #fdfdfb;
-    --accent: #1f6f5c;
-    --accent-strong: #144a3e;
-    --accent-soft: #dfe9e3;
-    --warn: #b5651d;
-    --warn-soft: #f3e2d1;
-    --rule: #cad3cc;
-    --rule-soft: #dee4de;
-    --terminal-bg: #182420;
-    --terminal-ink: #dfe9e3;
-    --terminal-accent: #6fd9b8;
-    --terminal-muted: #7d9186;
-    --shadow: 0 1px 2px rgba(22, 33, 29, 0.06), 0 8px 24px rgba(22, 33, 29, 0.05);
+    --efk-text:       #000000;
+    --efk-text-soft:  #48494b;
+    --efk-bg:         #FFFFFF;
+    --efk-canvas:     #e7e8e9;
+    --efk-grey-dark:  #ADAFB2;
+    --efk-grey-light: #D1D3D4;
+    --efk-accent1:    #EA5A4F;
+    --efk-accent2:    #003399;
+    --efk-accent3:    #00A6A3;
+    --efk-accent4:    #FAE03C;
+    --efk-accent5:    #F0DAA4;
 
-    --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Noto Serif', serif;
-    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'Roboto Mono', Consolas, 'Liberation Mono', monospace;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ink: #e7ece8;
-      --ink-soft: #b3bdb6;
-      --ink-faint: #8b968f;
-      --paper: #101815;
-      --paper-raised: #17211d;
-      --accent: #57c4a4;
-      --accent-strong: #85dcc0;
-      --accent-soft: #1c322a;
-      --warn: #e0925a;
-      --warn-soft: #33261b;
-      --rule: #2a3630;
-      --rule-soft: #212c26;
-      --terminal-bg: #0c1512;
-      --terminal-ink: #e2ece7;
-      --terminal-accent: #7fe0bd;
-      --terminal-muted: #6f8078;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px rgba(0, 0, 0, 0.35);
-    }
-  }
-
-  :root[data-theme="dark"] {
-    --ink: #e7ece8;
-    --ink-soft: #b3bdb6;
-    --ink-faint: #8b968f;
-    --paper: #101815;
-    --paper-raised: #17211d;
-    --accent: #57c4a4;
-    --accent-strong: #85dcc0;
-    --accent-soft: #1c322a;
-    --warn: #e0925a;
-    --warn-soft: #33261b;
-    --rule: #2a3630;
-    --rule-soft: #212c26;
-    --terminal-bg: #0c1512;
-    --terminal-ink: #e2ece7;
-    --terminal-accent: #7fe0bd;
-    --terminal-muted: #6f8078;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 28px rgba(0, 0, 0, 0.35);
-  }
-
-  :root[data-theme="light"] {
-    --ink: #16211d;
-    --ink-soft: #48544d;
-    --ink-faint: #6f7a72;
-    --paper: #f1f3ef;
-    --paper-raised: #fdfdfb;
-    --accent: #1f6f5c;
-    --accent-strong: #144a3e;
-    --accent-soft: #dfe9e3;
-    --warn: #b5651d;
-    --warn-soft: #f3e2d1;
-    --rule: #cad3cc;
-    --rule-soft: #dee4de;
-    --terminal-bg: #182420;
-    --terminal-ink: #dfe9e3;
-    --terminal-accent: #6fd9b8;
-    --terminal-muted: #7d9186;
-    --shadow: 0 1px 2px rgba(22, 33, 29, 0.06), 0 8px 24px rgba(22, 33, 29, 0.05);
+    --efk-font: Calibri, Candara, "Segoe UI", Optima, Arial, sans-serif;
+    --efk-font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
   }
 
   * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--efk-canvas); }
 
-  html, body {
-    margin: 0;
+  .reveal { font-family: var(--efk-font); color: var(--efk-text); font-size: 20px; }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { text-align: left; height: 100%; }
+
+  .reveal .progress { color: var(--efk-accent2); height: 4px; }
+  .reveal .controls { color: var(--efk-grey-dark); }
+  .reveal .slide-number {
+    color: var(--efk-grey-dark);
+    background: transparent;
+    font-family: var(--efk-font);
+    font-size: 14px;
+  }
+
+  /* ---- content canvas shared by every non-cover slide ---- */
+  .content-slide {
+    position: relative;
+    width: 100%;
     height: 100%;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--font-body);
-    overflow: hidden;
+    padding: 60px 90px 54px;
   }
 
-  .deck {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    height: 100dvh;
-  }
-
-  .chrome {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    padding: 1.1rem clamp(1.25rem, 4vw, 3rem) 0.6rem;
-    border-bottom: 1px solid var(--rule-soft);
-    flex-shrink: 0;
-  }
-
-  .brand {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
+  .slide-eyebrow {
+    font-size: 15px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ink-faint);
-  }
-
-  .brand strong {
-    color: var(--accent);
+    color: var(--efk-grey-dark);
     font-weight: 600;
+    margin: 0 0 8px;
   }
 
-  .progress-label {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--ink-faint);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: 0.03em;
+  .slide-title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--efk-text);
+    margin: 0 0 20px;
   }
 
-  .progress-label b {
-    color: var(--ink);
-    font-weight: 600;
+  .content-slide.cover .slide-title,
+  .content-slide.closing .slide-title {
+    color: var(--efk-accent2);
   }
 
-  .viewport {
-    flex: 1;
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-  .viewport::-webkit-scrollbar { display: none; }
-
-  .slide {
-    flex: 0 0 100%;
-    width: 100%;
-    scroll-snap-align: start;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem clamp(1.5rem, 6vw, 5rem);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .slide-inner {
-    width: min(100%, 62rem);
-    max-height: 100%;
-    overflow-y: auto;
-  }
-
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin: 0 0 0.6rem;
-  }
-
-  h1.headline {
-    font-family: var(--font-display);
-    font-size: clamp(1.9rem, 3.6vw, 3rem);
-    line-height: 1.08;
-    font-weight: 400;
-    margin: 0 0 0.5rem;
-    text-wrap: balance;
-    color: var(--ink);
-  }
-
-  p.lede {
-    font-size: clamp(1rem, 1.3vw, 1.18rem);
-    line-height: 1.55;
-    color: var(--ink-soft);
-    max-width: 42rem;
-    margin: 0 0 1.6rem;
-  }
-
-  .branch-motif {
+  .slide-logo {
     position: absolute;
-    top: -2rem;
-    right: -1rem;
-    width: 220px;
-    height: 220px;
-    opacity: 0.5;
-    pointer-events: none;
+    top: 42px;
+    right: 90px;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--efk-grey-dark);
   }
 
-  /* ---- glossary cards ---- */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    overflow: hidden;
+  .slide-footer {
+    position: absolute;
+    left: 90px;
+    right: 90px;
+    bottom: 34px;
+    font-size: 13px;
+    color: var(--efk-grey-dark);
+    border-top: 1px solid var(--efk-grey-light);
+    padding-top: 9px;
   }
 
-  .card-grid.cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  @media (max-width: 900px) {
-    .card-grid.cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-
-  .term-card {
-    background: var(--paper-raised);
-    padding: 1.15rem 1.3rem;
-  }
-
-  .term-card .term {
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--accent-strong);
-    display: block;
-    margin-bottom: 0.35rem;
-  }
-
-  .term-card .def {
-    font-size: 0.94rem;
+  .lede {
+    font-size: 20px;
     line-height: 1.5;
-    color: var(--ink-soft);
-    margin: 0;
+    color: var(--efk-text-soft);
+    max-width: 46rem;
+    margin: 0 0 22px;
   }
 
-  /* ---- numbered steps ---- */
-  .step-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  code {
+    font-family: var(--efk-font-mono);
+    background: #f1f1f2;
+    color: var(--efk-accent2);
+    padding: 1px 8px;
+    border-radius: 3px;
+    font-size: 0.88em;
+  }
+
+  /* ---- cover / closing ---- */
+  .content-slide.cover,
+  .content-slide.closing {
     display: flex;
     flex-direction: column;
+    justify-content: center;
   }
+  .content-slide.cover .slide-title { font-size: 54px; margin-bottom: 12px; }
+  .content-slide.cover .slide-subtitle { font-size: 24px; color: var(--efk-text-soft); margin: 0; }
+  .content-slide.cover .cover-rule {
+    width: 64px;
+    height: 4px;
+    background: var(--efk-accent1);
+    margin: 0 0 20px;
+  }
+  .content-slide.closing { text-align: center; align-items: center; }
+  .content-slide.closing .slide-title { font-size: 48px; }
+  .content-slide.closing .slide-subtitle { font-size: 22px; color: var(--efk-text-soft); }
 
-  .step {
+  /* ---- agenda ---- */
+  .agenda-grid {
     display: grid;
-    grid-template-columns: 2.6rem 1fr;
-    gap: 1.1rem;
-    padding: 0.95rem 0;
-    border-top: 1px solid var(--rule-soft);
-    position: relative;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 46px;
+    height: 100%;
+    align-items: center;
   }
-  .step:first-child { border-top: 1px solid var(--rule); }
-
-  .step-num {
-    font-family: var(--font-mono);
-    font-size: 0.92rem;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-    padding-top: 0.1rem;
-  }
-
-  .step-body h3 {
-    font-family: var(--font-body);
-    font-size: 1.02rem;
-    font-weight: 650;
-    margin: 0 0 0.2rem;
-    color: var(--ink);
-  }
-
-  .step-body p {
-    margin: 0;
-    font-size: 0.94rem;
-    line-height: 1.5;
-    color: var(--ink-soft);
-  }
-
-  .step-body code {
-    font-family: var(--font-mono);
-    background: var(--accent-soft);
-    color: var(--accent-strong);
-    padding: 0.05rem 0.4rem;
-    border-radius: 3px;
-    font-size: 0.85em;
-  }
-
-  /* ---- terminal ---- */
-  .terminal {
-    background: var(--terminal-bg);
-    border-radius: 6px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-  }
-
-  .terminal-bar {
-    display: flex;
-    gap: 0.4rem;
-    padding: 0.65rem 0.8rem;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .terminal-bar span {
-    width: 9px; height: 9px; border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-  }
-
-  .terminal pre {
-    margin: 0;
-    padding: 1.1rem 1.4rem 1.3rem;
-    font-family: var(--font-mono);
-    font-size: 0.88rem;
-    line-height: 1.75;
-    color: var(--terminal-ink);
-    overflow-x: auto;
-  }
-  .terminal .prompt { color: var(--terminal-muted); }
-  .terminal .cmd { color: var(--terminal-accent); font-weight: 600; }
-  .terminal .comment { color: var(--terminal-muted); }
-
-  /* ---- checklist ---- */
-  .checklist {
+  .agenda-list {
     list-style: none;
-    margin: 1.3rem 0 0;
+    margin: 0;
     padding: 0;
     display: grid;
-    gap: 0.55rem;
+    gap: 16px;
   }
-  .checklist li {
+  .agenda-list li {
     display: flex;
-    gap: 0.65rem;
     align-items: baseline;
-    font-size: 0.94rem;
-    color: var(--ink-soft);
-    line-height: 1.5;
+    gap: 16px;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--efk-text);
   }
-  .checklist li::before {
+  .agenda-list .num {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--efk-accent2);
+    min-width: 30px;
+  }
+
+  /* ---- chevron list ---- */
+  ul.efk-list {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  ul.efk-list li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    line-height: 1.5;
+    color: var(--efk-text-soft);
+    font-size: 18px;
+  }
+  ul.efk-list li::before {
     content: '';
     flex: none;
-    width: 7px; height: 7px;
-    margin-top: 0.42rem;
-    background: var(--warn);
-    border-radius: 1px;
-    transform: rotate(45deg);
+    width: 0; height: 0;
+    margin-top: 6px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid var(--efk-accent1);
   }
-  .checklist b { color: var(--ink); font-weight: 650; }
+  ul.efk-list b { color: var(--efk-text); font-weight: 700; }
 
+  /* ---- two content columns ---- */
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2.2rem;
-    margin-bottom: 1.4rem;
+    gap: 44px;
+    margin-bottom: 20px;
   }
-  .two-col .def-block .k {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.06em;
+  .two-col .col .k {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ink-faint);
+    color: var(--efk-accent2);
     display: block;
-    margin-bottom: 0.3rem;
+    margin-bottom: 6px;
   }
-  .two-col .def-block p {
+  .two-col .col p {
     margin: 0;
-    font-size: 1rem;
     line-height: 1.55;
-    color: var(--ink);
+    font-size: 18px;
+    color: var(--efk-text-soft);
   }
 
-  /* ---- controls / commit graph nav ---- */
-  .controls {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.4rem;
-    padding: 0.7rem 0 1.15rem;
+  /* ---- term card grid ---- */
+  .term-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--efk-grey-light);
+    border: 1px solid var(--efk-grey-light);
+  }
+  .term-card { background: var(--efk-bg); padding: 15px 18px; }
+  .term-card .term {
+    display: block;
+    font-weight: 700;
+    color: var(--efk-accent2);
+    margin-bottom: 5px;
+    font-size: 17px;
+  }
+  .term-card .def {
+    margin: 0;
+    line-height: 1.45;
+    color: var(--efk-text-soft);
+    font-size: 15px;
   }
 
-  .nav-btn {
-    font-family: var(--font-mono);
-    background: var(--paper-raised);
-    border: 1px solid var(--rule);
-    color: var(--ink);
-    width: 2.1rem;
-    height: 2.1rem;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: border-color 0.15s ease, color 0.15s ease;
+  /* ---- numbered steps ---- */
+  ol.step-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .step {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--efk-grey-light);
   }
-  .nav-btn:hover { border-color: var(--accent); color: var(--accent-strong); }
-  .nav-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .step:first-child { border-top: none; }
+  .step-num { font-weight: 700; font-size: 18px; color: var(--efk-accent1); }
+  .step-body h3 { font-size: 18px; font-weight: 700; margin: 0 0 3px; color: var(--efk-text); }
+  .step-body p { margin: 0; line-height: 1.45; font-size: 16px; color: var(--efk-text-soft); }
 
-  .graph {
-    display: flex;
-    align-items: center;
+  /* ---- terminal ---- */
+  .terminal { background: #16202b; border-radius: 4px; overflow: hidden; }
+  .terminal-bar { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .terminal-bar span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.18); }
+  .terminal pre {
+    margin: 0;
+    padding: 18px 22px 22px;
+    font-family: var(--efk-font-mono);
+    font-size: 15px;
+    line-height: 1.7;
+    color: #e7e8e9;
+    overflow-x: auto;
   }
-
-  .graph button {
-    -webkit-appearance: none;
-    appearance: none;
-    background: none;
-    border: none;
-    padding: 0.5rem 0.15rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  }
-  .graph button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 50%; }
-
-  .graph svg { display: block; }
-
-  .graph .rail {
-    stroke: var(--rule);
-    stroke-width: 2;
-  }
-  .graph .node {
-    stroke-width: 2;
-  }
-
-  @media (max-width: 640px) {
-    .card-grid { grid-template-columns: 1fr; }
-    .two-col { grid-template-columns: 1fr; gap: 1.2rem; }
-    .step { grid-template-columns: 2rem 1fr; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .viewport { scroll-behavior: auto; }
-  }
+  .terminal .prompt { color: #7d8791; }
+  .terminal .cmd { color: var(--efk-accent4); font-weight: 600; }
+  .terminal .comment { color: #7d8791; }
 </style>
 
-<div class="deck" id="deck">
-  <header class="chrome">
-    <div class="brand"><strong>git</strong> · formation débutants</div>
-    <div class="progress-label"><b id="slideNum">1</b> / 5</div>
-  </header>
+<div class="reveal">
+  <div class="slides">
 
-  <div class="viewport" id="viewport">
+    <!-- Slide 1 : Couverture -->
+    <section>
+      <div class="content-slide cover">
+        <div class="cover-rule"></div>
+        <p class="slide-eyebrow">EFK · Formation interne</p>
+        <h1 class="slide-title">Formation GitHub<br>Notions de base</h1>
+        <p class="slide-subtitle">Comprendre Git et GitHub avant le premier commit et le premier push.</p>
+      </div>
+    </section>
 
-    <!-- Slide 1 -->
-    <section class="slide">
-      <svg class="branch-motif" viewBox="0 0 200 200" fill="none" aria-hidden="true">
-        <path d="M20 10 C20 80, 100 70, 100 140 L100 190" stroke="var(--accent-soft)" stroke-width="3"/>
-        <path d="M20 10 C20 80, 100 70, 100 140" stroke="var(--accent-soft)" stroke-width="3"/>
-        <path d="M20 10 C90 20, 160 40, 160 100 C160 150, 100 150, 100 190" stroke="var(--rule)" stroke-width="3"/>
-        <circle cx="20" cy="10" r="5" fill="var(--accent)"/>
-        <circle cx="100" cy="140" r="5" fill="var(--accent)"/>
-        <circle cx="100" cy="190" r="5" fill="var(--rule)"/>
-        <circle cx="160" cy="100" r="5" fill="var(--rule)"/>
-      </svg>
-      <div class="slide-inner">
-        <p class="eyebrow">01 — Introduction</p>
-        <h1 class="headline">Chaque commit est un instantané,<br>pas une différence.</h1>
-        <p class="lede">Git modélise l'historique comme un graphe orienté acyclique (DAG) d'objets identifiés par hachage SHA-1 — pas une suite de patchs appliqués les uns après les autres.</p>
-
-        <div class="two-col">
-          <div class="def-block">
-            <span class="k">Git</span>
-            <p>Un système de contrôle de version distribué : chaque clone contient l'historique complet, sous forme d'objets stockés dans <code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">.git/objects</code> (blobs, trees, commits).</p>
+    <!-- Slide 2 : Sommaire -->
+    <section>
+      <div class="content-slide">
+        <p class="slide-logo">EFK</p>
+        <div class="agenda-grid">
+          <div>
+            <p class="slide-eyebrow">Au programme</p>
+            <h1 class="slide-title">Cinq notions pour démarrer</h1>
           </div>
-          <div class="def-block">
+          <ol class="agenda-list">
+            <li><span class="num">01</span> Introduction — commits et instantanés</li>
+            <li><span class="num">02</span> Vocabulaire — six objets et références</li>
+            <li><span class="num">03</span> Mise en route — du zéro au premier commit</li>
+            <li><span class="num">04</span> Workflow — le cycle d'une branche</li>
+            <li><span class="num">05</span> Collaboration — fusionner sans tout casser</li>
+          </ol>
+        </div>
+        <div class="slide-footer">Formation GitHub | Notions de base | [Lieu] | [Date]</div>
+      </div>
+    </section>
+
+    <!-- Slide 3 -->
+    <section>
+      <div class="content-slide">
+        <p class="slide-logo">EFK</p>
+        <p class="slide-eyebrow">01 — Introduction</p>
+        <h1 class="slide-title">Chaque commit est un instantané, pas une différence</h1>
+        <p class="lede">Git modélise l'historique comme un graphe orienté acyclique (DAG) d'objets identifiés par hachage SHA-1 — pas une suite de patchs appliqués les uns après les autres.</p>
+        <div class="two-col">
+          <div class="col">
+            <span class="k">Git</span>
+            <p>Un système de contrôle de version distribué : chaque clone contient l'historique complet, sous forme d'objets stockés dans <code>.git/objects</code> (blobs, trees, commits).</p>
+          </div>
+          <div class="col">
             <span class="k">GitHub</span>
             <p>Un hébergeur de dépôts Git qui ajoute une couche collaborative : pull requests, issues, CI/CD (Actions), gestion des accès — sans modifier le fonctionnement de Git.</p>
           </div>
         </div>
-
-        <ul class="checklist">
+        <ul class="efk-list">
           <li><b>Working directory</b> — les fichiers tels que vous les éditez sur le disque.</li>
-          <li><b>Staging area (index)</b> — la prochaine photo en préparation, construite avec <code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">git add</code>.</li>
+          <li><b>Staging area (index)</b> — la prochaine photo en préparation, construite avec <code>git add</code>.</li>
           <li><b>Repository (HEAD)</b> — l'historique déjà validé, sous forme de commits immuables.</li>
         </ul>
+        <div class="slide-footer">Formation GitHub | Notions de base | [Lieu] | [Date]</div>
       </div>
     </section>
 
-    <!-- Slide 2 -->
-    <section class="slide">
-      <div class="slide-inner">
-        <p class="eyebrow">02 — Vocabulaire</p>
-        <h1 class="headline">Six objets et références à connaître</h1>
+    <!-- Slide 4 -->
+    <section>
+      <div class="content-slide">
+        <p class="slide-logo">EFK</p>
+        <p class="slide-eyebrow">02 — Vocabulaire</p>
+        <h1 class="slide-title">Six objets et références à connaître</h1>
         <p class="lede">Le modèle de données de Git repose sur peu de primitives. Une fois posées, tout le workflow devient prévisible.</p>
-
-        <div class="card-grid cols-3">
+        <div class="term-grid">
           <div class="term-card">
             <span class="term">repository</span>
-            <p class="def">Le dossier <code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">.git</code> : une base d'objets adressés par hachage (blobs = contenu, trees = arborescence, commits = snapshots).</p>
+            <p class="def">Le dossier <code>.git</code> : une base d'objets adressés par hachage (blobs = contenu, trees = arborescence, commits = snapshots).</p>
           </div>
           <div class="term-card">
             <span class="term">commit (SHA)</span>
@@ -515,23 +344,24 @@
           </div>
           <div class="term-card">
             <span class="term">staging area (index)</span>
-            <p class="def">Zone intermédiaire entre le répertoire de travail et le prochain commit ; alimentée par <code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">git add</code>.</p>
+            <p class="def">Zone intermédiaire entre le répertoire de travail et le prochain commit ; alimentée par <code>git add</code>.</p>
           </div>
           <div class="term-card">
             <span class="term">remote</span>
-            <p class="def">Un alias vers l'URL d'un autre dépôt (<code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">origin</code>) ; <code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">git fetch</code> télécharge ses références sans toucher à la branche locale.</p>
+            <p class="def">Un alias vers l'URL d'un autre dépôt (<code>origin</code>) ; <code>git fetch</code> télécharge ses références sans toucher à la branche locale.</p>
           </div>
         </div>
+        <div class="slide-footer">Formation GitHub | Notions de base | [Lieu] | [Date]</div>
       </div>
     </section>
 
-    <!-- Slide 3 -->
-    <section class="slide">
-      <div class="slide-inner">
-        <p class="eyebrow">03 — Mise en route</p>
-        <h1 class="headline">De zéro à un premier commit signé</h1>
+    <!-- Slide 5 -->
+    <section>
+      <div class="content-slide">
+        <p class="slide-logo">EFK</p>
+        <p class="slide-eyebrow">03 — Mise en route</p>
+        <h1 class="slide-title">De zéro à un premier commit signé</h1>
         <p class="lede">Quatre étapes pour une configuration locale correcte, avant le premier <code>push</code>.</p>
-
         <ol class="step-list">
           <li class="step">
             <span class="step-num">01</span>
@@ -562,16 +392,17 @@
             </div>
           </li>
         </ol>
+        <div class="slide-footer">Formation GitHub | Notions de base | [Lieu] | [Date]</div>
       </div>
     </section>
 
-    <!-- Slide 4 -->
-    <section class="slide">
-      <div class="slide-inner">
-        <p class="eyebrow">04 — Workflow</p>
-        <h1 class="headline">Le cycle d'une branche de fonctionnalité</h1>
+    <!-- Slide 6 -->
+    <section>
+      <div class="content-slide">
+        <p class="slide-logo">EFK</p>
+        <p class="slide-eyebrow">04 — Workflow</p>
+        <h1 class="slide-title">Le cycle d'une branche de fonctionnalité</h1>
         <p class="lede">De la création de la branche jusqu'à sa publication, en passant par un index construit hunk par hunk.</p>
-
         <div class="terminal">
           <div class="terminal-bar"><span></span><span></span><span></span></div>
           <pre><span class="prompt">$</span> <span class="cmd">git switch</span> -c feature/menu-fix          <span class="comment"># nouvelle branche depuis HEAD</span>
@@ -582,20 +413,21 @@
 <span class="prompt">$</span> <span class="cmd">git push</span> -u origin feature/menu-fix    <span class="comment"># publie, lie le tracking</span>
 <span class="prompt">$</span> <span class="cmd">git log</span> --oneline --graph --decorate  <span class="comment"># visualiser le DAG</span></pre>
         </div>
+        <div class="slide-footer">Formation GitHub | Notions de base | [Lieu] | [Date]</div>
       </div>
     </section>
 
-    <!-- Slide 5 -->
-    <section class="slide">
-      <div class="slide-inner">
-        <p class="eyebrow">05 — Collaboration</p>
-        <h1 class="headline">Fusionner sans perdre le fil de l'historique</h1>
+    <!-- Slide 7 -->
+    <section>
+      <div class="content-slide">
+        <p class="slide-logo">EFK</p>
+        <p class="slide-eyebrow">05 — Collaboration</p>
+        <h1 class="slide-title">Fusionner sans perdre le fil de l'historique</h1>
         <p class="lede">GitHub ajoute une couche de revue et d'automatisation au-dessus des primitives de fusion de Git.</p>
-
-        <div class="card-grid">
+        <div class="term-grid">
           <div class="term-card">
             <span class="term">pull request</span>
-            <p class="def">Compare deux références (branche vs <code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">main</code>) ; GitHub calcule un diff à trois points via le <em>merge-base</em> commun.</p>
+            <p class="def">Compare deux références (branche vs <code>main</code>) ; GitHub calcule un diff à trois points via le <em>merge-base</em> commun.</p>
           </div>
           <div class="term-card">
             <span class="term">code review</span>
@@ -603,135 +435,40 @@
           </div>
           <div class="term-card">
             <span class="term">merge / rebase</span>
-            <p class="def"><code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">merge</code> crée un commit de fusion (historique fidèle) ; <code style="font-family: var(--font-mono); background: var(--accent-soft); color: var(--accent-strong); padding: 0.05rem 0.4rem; border-radius: 3px;">rebase</code> réécrit les commits sur une nouvelle base (historique linéaire).</p>
+            <p class="def"><code>merge</code> crée un commit de fusion (historique fidèle) ; <code>rebase</code> réécrit les commits sur une nouvelle base (historique linéaire).</p>
           </div>
         </div>
-
-        <ul class="checklist" style="margin-top: 1.1rem;">
-          <li>Un conflit se résout en éditant les marqueurs <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">&lt;&lt;&lt;&lt;&lt;&lt;&lt; / ======= / &gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>, puis <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">git add</code> + <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">commit</code> (ou <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">rebase --continue</code>).</li>
-          <li>Les <b>branch protection rules</b> imposent une CI verte et une revue approuvée avant de fusionner sur <code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">main</code>.</li>
-          <li>Un message de commit suit souvent une convention (<code style="font-family: var(--font-mono); background: var(--warn-soft); color: var(--warn); padding: 0.05rem 0.4rem; border-radius: 3px;">type(scope): résumé</code>) pour un historique exploitable par les outils.</li>
+        <ul class="efk-list" style="margin-top: 16px;">
+          <li>Un conflit se résout en éditant les marqueurs <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; / ======= / &gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>, puis <code>git add</code> + <code>commit</code> (ou <code>rebase --continue</code>).</li>
+          <li>Les <b>branch protection rules</b> imposent une CI verte et une revue approuvée avant de fusionner sur <code>main</code>.</li>
+          <li>Un message de commit suit souvent une convention (<code>type(scope): résumé</code>) pour un historique exploitable par les outils.</li>
         </ul>
+        <div class="slide-footer">Formation GitHub | Notions de base | [Lieu] | [Date]</div>
+      </div>
+    </section>
+
+    <!-- Slide 8 : Clôture -->
+    <section>
+      <div class="content-slide closing">
+        <h1 class="slide-title">Merci de votre attention</h1>
+        <p class="slide-subtitle">Avez-vous des questions ?</p>
       </div>
     </section>
 
   </div>
-
-  <nav class="controls" aria-label="Navigation entre les slides">
-    <button class="nav-btn" id="prevBtn" aria-label="Slide précédente">‹</button>
-    <div class="graph" id="graph"></div>
-    <button class="nav-btn" id="nextBtn" aria-label="Slide suivante">›</button>
-  </nav>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
 <script>
-  (function () {
-    var viewport = document.getElementById('viewport');
-    var slides = viewport.querySelectorAll('.slide');
-    var total = slides.length;
-    var current = 0;
-    var slideNumEl = document.getElementById('slideNum');
-    var prevBtn = document.getElementById('prevBtn');
-    var nextBtn = document.getElementById('nextBtn');
-    var graphEl = document.getElementById('graph');
-
-    var spacing = 30, radius = 5, hitRadius = 11;
-    var svgW = spacing * (total - 1) + hitRadius * 2;
-    var svgH = hitRadius * 2;
-    var midY = svgH / 2;
-
-    var svgNS = 'http://www.w3.org/2000/svg';
-    var svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('viewBox', '0 0 ' + svgW + ' ' + svgH);
-    svg.setAttribute('width', svgW);
-    svg.setAttribute('height', svgH);
-
-    var rail = document.createElementNS(svgNS, 'line');
-    rail.setAttribute('class', 'rail');
-    rail.setAttribute('x1', hitRadius);
-    rail.setAttribute('y1', midY);
-    rail.setAttribute('x2', svgW - hitRadius);
-    rail.setAttribute('y2', midY);
-    svg.appendChild(rail);
-
-    var nodes = [];
-    for (var i = 0; i < total; i++) {
-      var cx = hitRadius + spacing * i;
-      var circle = document.createElementNS(svgNS, 'circle');
-      circle.setAttribute('class', 'node');
-      circle.setAttribute('cx', cx);
-      circle.setAttribute('cy', midY);
-      circle.setAttribute('r', radius);
-      svg.appendChild(circle);
-      nodes.push(circle);
-    }
-    graphEl.appendChild(svg);
-
-    var wrapButtons = [];
-    var rect0 = null;
-
-    function styleNodes() {
-      nodes.forEach(function (n, i) {
-        if (i < current) {
-          n.setAttribute('fill', 'var(--ink-faint)');
-          n.setAttribute('stroke', 'var(--ink-faint)');
-          n.setAttribute('r', radius);
-        } else if (i === current) {
-          n.setAttribute('fill', 'var(--accent)');
-          n.setAttribute('stroke', 'var(--accent)');
-          n.setAttribute('r', radius + 2);
-        } else {
-          n.setAttribute('fill', 'var(--paper)');
-          n.setAttribute('stroke', 'var(--rule)');
-          n.setAttribute('r', radius);
-        }
-      });
-    }
-
-    function goTo(index, behavior) {
-      current = Math.max(0, Math.min(total - 1, index));
-      viewport.scrollTo({ left: current * viewport.clientWidth, behavior: behavior || 'smooth' });
-      slideNumEl.textContent = current + 1;
-      prevBtn.disabled = current === 0;
-      nextBtn.disabled = current === total - 1;
-      styleNodes();
-    }
-
-    // clickable hit-areas over each node
-    nodes.forEach(function (n, i) {
-      n.style.cursor = 'pointer';
-      n.addEventListener('click', function () { goTo(i); });
-    });
-
-    prevBtn.addEventListener('click', function () { goTo(current - 1); });
-    nextBtn.addEventListener('click', function () { goTo(current + 1); });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowRight') goTo(current + 1);
-      if (e.key === 'ArrowLeft') goTo(current - 1);
-    });
-
-    var resizeTimer;
-    var scrollTimer;
-    viewport.addEventListener('scroll', function () {
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(function () {
-        var idx = Math.round(viewport.scrollLeft / viewport.clientWidth);
-        if (idx !== current) {
-          current = idx;
-          slideNumEl.textContent = current + 1;
-          prevBtn.disabled = current === 0;
-          nextBtn.disabled = current === total - 1;
-          styleNodes();
-        }
-      }, 80);
-    });
-
-    window.addEventListener('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () { goTo(current, 'auto'); }, 100);
-    });
-
-    goTo(0, 'auto');
-  })();
+  Reveal.initialize({
+    width: 1280,
+    height: 720,
+    margin: 0,
+    center: false,
+    hash: true,
+    controls: true,
+    progress: true,
+    slideNumber: 'c/t',
+    transition: 'fade'
+  });
 </script>
