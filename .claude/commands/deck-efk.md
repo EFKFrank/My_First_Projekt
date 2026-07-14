@@ -85,28 +85,54 @@ Le gabarit officiel définit 6 teintes déclinées chacune en 6 nuances (du plus
 | Gris | `#55575B` `#808388` `#ADAFB2` `#CECFD1` `#DEDFE0` `#EFEFF0` |
 
 ### Assets vectoriels vendorisés
-Ces fichiers ont été extraits/redessinés à partir du gabarit officiel et vivent dans `assets/efk/` à la racine du dépôt (chemin à adapter selon l'emplacement du fichier de sortie, ex. `../assets/efk/...` depuis `training/`). Réutilise-les tels quels, ne les régénère pas :
-- `assets/efk/logo.svg` — le logo EFK (croix suisse grise + drapeau rouge), vectoriel, fond transparent.
-- `assets/efk/pictograms/*.png` — les 15 pictogrammes métier en trait bleu/rouge (fond transparent), un fichier par domaine (ex. `sante.png`, `justice-police.png`, `projets-informatiques.png` — voir le dossier pour la liste complète).
+Ces fichiers ont été extraits (vectorisés via potrace depuis les images du gabarit officiel) ou redessinés, et vivent dans `assets/efk/` à la racine du dépôt (chemin à adapter selon l'emplacement du fichier de sortie, ex. `../assets/efk/...` depuis `training/`). Réutilise-les tels quels, ne les régénère pas, et ne les recolore/désature jamais (voir règle de vivacité plus bas) :
+- `assets/efk/logo.svg` — le petit logo EFK du bandeau (croix suisse grise + drapeau rouge), vectoriel, fond transparent. Utilisé en haut à droite de **toutes les slides de contenu** (pas la couverture, voir ci-dessous).
+- `assets/efk/institution-lockup.png` — le nom de l'institution en 5 langues (DE/FR/IT/RM/EN, texte noir) + le pictogramme croix-blanche/drapeau-rouge en grand, fond transparent. Réservé à la **slide de couverture uniquement**, à la place du petit logo standard.
+- `assets/efk/pictograms/*.svg` — les 15 pictogrammes métier vectoriels (traits bleu `#003399` / rouge `#EA5A4F`, fond transparent) : `achats-publics`, `administration-federale`, `armee-protection-population`, `assurances-sociales`, `autres-audits`, `culture-sport`, `economie-agriculture`, `energie-communication`, `finances-publiques-impots`, `formation-recherche`, `justice-police`, `projets-informatiques`, `relations-etranger`, `sante`, `transport-environnement`.
 - `assets/efk/icon-questions.svg` — bulles de discussion bleue (avec "?") et rouge, pour la slide "Avez-vous des questions ?".
 - `assets/efk/icon-attention-ear-eye.svg` et `assets/efk/icon-attention-smiley.svg` — deux variantes pour la slide "Merci de votre attention" (oreille+œil = plus institutionnel, sourire = plus chaleureux) : choisis celle qui correspond au ton de la présentation, ou demande à l'utilisateur s'il n'y a pas de préférence évidente.
 
 Si un de ces fichiers manque (nouveau dépôt, copie partielle), recrée-le à l'identique avant de continuer plutôt que d'improviser un remplaçant visuellement différent.
 
-### Mise en page (repères issus des positions réelles du gabarit)
-- Marge gauche/droite du bloc de contenu : ~0.88 in (≈ 45px sur une slide de 1280px de large).
-- Logo EFK (`assets/efk/logo.svg`) : en haut à droite de chaque slide de contenu (~0.65in × 0.62in) — c'est la position officielle du gabarit, ne pas le mettre à gauche sauf demande explicite.
+**Règle de vivacité** : les pictogrammes et icônes s'affichent toujours en **pleine opacité** (`opacity: 1`), y compris sur fond gris — ne jamais les désaturer/éclaircir pour en faire un "watermark" discret. La discrétion sur la couverture vient de leur taille modeste et de leur positionnement (jamais du fait de les rendre pâles).
+
+### Mise en page (repères issus des positions réelles du gabarit, sur un canevas Reveal.js 1280×720 — 1px = 9525 EMU)
+- Marge gauche/droite du bloc de contenu : ~0.88 in (≈ 45px, en pratique le gabarit utilise 90px de marge sur les slides de contenu).
+- Logo EFK (`assets/efk/logo.svg`) : en haut à droite de chaque slide de **contenu** (~62×60px) — position officielle, ne pas le mettre à gauche sauf demande explicite.
 - Pied de page sur chaque slide de contenu : à gauche `Titre | Lieu | Date | Prénom Nom`, à droite le numéro de slide — texte petit, gris.
-- Titre de slide toujours aligné à gauche, jamais centré (sauf slide de couverture et slides de clôture).
+- Titre de slide toujours aligné à gauche, jamais centré (sauf sous-titre de couverture, voir plus bas) — y compris sur la couverture et les slides de clôture : le titre est en haut/à gauche, ce n'est plus un bloc centré au milieu de l'écran.
+
+#### Couverture : positions exactes des 15 pictogrammes
+Le gabarit officiel positionne les 15 pictogrammes métier de façon précise et non aléatoire sur la couverture "avec icônes" — reproduis ces positions et tailles exactement (en px, canevas 1280×720) :
+
+| Pictogramme | x | y | largeur | hauteur |
+|---|---|---|---|---|
+| `finances-publiques-impots` | 173 | 300 | 93 | 72 |
+| `economie-agriculture` | 404 | 285 | 90 | 87 |
+| `formation-recherche` | 652 | 291 | 81 | 81 |
+| `sante` | 864 | 294 | 93 | 78 |
+| `assurances-sociales` | 1103 | 270 | 81 | 102 |
+| `transport-environnement` | 171 | 419 | 93 | 84 |
+| `armee-protection-population` | 413 | 413 | 72 | 90 |
+| `relations-etranger` | 644 | 407 | 96 | 96 |
+| `justice-police` | 859 | 428 | 102 | 75 |
+| `projets-informatiques` | 1095 | 428 | 96 | 75 |
+| `culture-sport` | 172 | 553 | 93 | 87 |
+| `energie-communication` | 396 | 551 | 105 | 90 |
+| `achats-publics` | 649 | 553 | 87 | 87 |
+| `administration-federale` | 872 | 556 | 75 | 84 |
+| `autres-audits` | 1104 | 562 | 78 | 78 |
+
+Ce nuage d'icônes occupe la moitié inférieure de la slide (sous le titre/sous-titre) et quasiment toute la largeur ; ne les recentre pas, ne les redimensionne pas de façon uniforme — chaque taille est légèrement différente dans l'original.
 
 ### Types de slides à disposition (calqués sur les masques du gabarit)
-1. **Couverture (avec/sans icônes)** — fond gris (`--efk-bg-grey`), logo en haut à droite, titre bleu centré verticalement dans le tiers supérieur, sous-titre en dessous, pas de pied de page. La variante "avec icônes" disperse quelques-uns des pictogrammes de `assets/efk/pictograms/` en arrière-plan (discrets, opacité réduite ou petite taille, jamais au centre où se trouve le texte).
+1. **Couverture (avec/sans icônes)** — fond gris (`--efk-bg-grey`). Titre + sous-titre en **haut à gauche** (pas centrés verticalement), position ~(84, 68) pour le titre. `assets/efk/institution-lockup.png` en haut à droite (remplace le petit logo standard sur cette slide uniquement). Variante "avec icônes" : les 15 pictogrammes positionnés selon le tableau ci-dessus, en pleine couleur. Pas de pied de page.
 2. **Sommaire / Agenda** — titre "Willkommen"-style + liste des sujets à droite.
 3. **Titre + contenu** — titre noir en haut, corps de texte/liste à puces en dessous (jusqu'à 3 niveaux d'indentation).
 4. **Deux contenus** — deux colonnes de contenu côte à côte sous un même titre.
 5. **Comparaison** — deux colonnes avec chacune un sous-titre + contenu (pour comparer deux options/concepts).
-6. **Clôture — Questions** — fond gris, titre bleu "Avez-vous des questions ?", icône `assets/efk/icon-questions.svg`, pas de pied de page.
-7. **Clôture — Remerciement** — fond gris, titre bleu "Merci de votre attention", icône `assets/efk/icon-attention-ear-eye.svg` ou `icon-attention-smiley.svg`, pas de pied de page.
+6. **Clôture — Questions** — fond gris, titre bleu **en haut à gauche** "Avez-vous des questions ?", icône `assets/efk/icon-questions.svg` **large (≥ 220px) et à droite**, verticalement centrée. Pas de pied de page.
+7. **Clôture — Remerciement** — même structure que Questions : titre bleu en haut à gauche "Merci de votre attention", icône (`icon-attention-ear-eye.svg` ou `icon-attention-smiley.svg`) large (≥ 220px) et à droite. Pas de pied de page.
 
 Choisis le type de slide le plus adapté à chaque section du contenu fourni ; ne force pas tout dans un seul type. Une présentation se termine typiquement par les deux slides de clôture (Questions puis Remerciement), dans cet ordre ou l'inverse selon la préférence de l'utilisateur.
 
