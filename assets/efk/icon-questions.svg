@@ -1,0 +1,7 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <path d="M45 8 A34 34 0 1 1 20 65 L8 78 L16 58 A34 34 0 0 1 45 8 Z"
+        fill="none" stroke="#003399" stroke-width="5.5" stroke-linejoin="round"/>
+  <text x="38" y="52" font-family="Calibri, Arial, sans-serif" font-size="30" font-weight="700" fill="#003399">?</text>
+  <path d="M72 60 A18 18 0 1 1 60 93 L54 96 L57 86 A18 18 0 0 1 72 60 Z"
+        fill="none" stroke="#EA5A4F" stroke-width="4.5" stroke-linejoin="round"/>
+</svg>

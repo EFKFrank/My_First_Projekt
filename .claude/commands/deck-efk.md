@@ -35,7 +35,7 @@ Si `$ARGUMENTS` désigne un fichier existant du dépôt (ex. `training/formation
   </script>
   ```
 - Utiliser les mécanismes natifs de Reveal.js plutôt que de les réinventer : `slideNumber` pour la pagination, la barre de progression intégrée (`Reveal.configure({ progress: true })` si souhaité), `data-transition` par slide si un type de slide a besoin d'une transition différente, et la navigation clavier/tactile déjà fournie par Reveal (ne pas coder de navigation maison).
-- Le logo EFK (ou son monogramme texte à défaut du fichier) et le fil `Titre | Lieu | Date | Prénom Nom` doivent apparaître sur chaque slide de contenu. Reveal.js redimensionne `.reveal .slides` via une transformation CSS (`scale`) : un élément en `position: fixed` placé en dehors de `.reveal` ne suivrait pas ce zoom et se désaligne au redimensionnement de la fenêtre. Place donc ce logo/footer en `position: absolute` **à l'intérieur de chaque `<section>`** de contenu (il est alors mis à l'échelle avec le reste de la slide) ; ne le mets pas sur les slides de couverture/clôture.
+- Le logo EFK et le fil `Titre | Lieu | Date | Prénom Nom` doivent apparaître sur chaque slide de contenu. Reveal.js redimensionne `.reveal .slides` via une transformation CSS (`scale`) : un élément en `position: fixed` placé en dehors de `.reveal` ne suivrait pas ce zoom et se désaligne au redimensionnement de la fenêtre. Place donc ce logo/footer en `position: absolute` **à l'intérieur de chaque `<section>`** de contenu (il est alors mis à l'échelle avec le reste de la slide) ; ne le mets pas sur les slides de couverture/clôture (qui ont leur propre traitement, voir plus bas).
 
 ### Format
 - Ratio **16:9**, dimensions de rendu Reveal.js **`width: 1280, height: 720`** (calées sur le ratio du gabarit officiel 13.333 in × 7.5 in).
@@ -53,9 +53,10 @@ Si `$ARGUMENTS` désigne un fichier existant du dépôt (ex. `training/formation
 ```css
 :root {
   --efk-text:       #000000; /* dk1 / tx1 — texte principal */
-  --efk-bg:         #FFFFFF; /* lt1 / bg1 — fond, toujours blanc */
+  --efk-bg:         #FFFFFF; /* lt1 / bg1 — fond des slides de contenu */
+  --efk-bg-grey:    #D1D3D4; /* bg2 — fond gris de la couverture ET des slides de clôture */
   --efk-grey-dark:  #ADAFB2; /* dk2 */
-  --efk-grey-light: #D1D3D4; /* lt2 */
+  --efk-grey-light: #D1D3D4; /* lt2 (identique à bg2) */
   --efk-accent1:    #EA5A4F; /* rouge corail */
   --efk-accent2:    #003399; /* bleu — couleur des titres de la slide de couverture + liens */
   --efk-accent3:    #00A6A3; /* turquoise */
@@ -64,27 +65,50 @@ Si `$ARGUMENTS` désigne un fichier existant du dépôt (ex. `training/formation
   --efk-accent6:    #ADAFB2; /* gris (identique à dk2) */
 }
 ```
-- Fond de toutes les slides : **blanc uni** (`--efk-bg`), pas de dégradé ni de texture.
+- Fond des slides de **contenu** : blanc uni (`--efk-bg`).
+- Fond de la slide de **couverture** et des slides de **clôture** ("Avez-vous des questions ?", "Merci de votre attention") : gris uni (`--efk-bg-grey`), jamais de dégradé ni de texture.
 - Titre en **noir** (`--efk-text`) sur les slides de contenu.
-- Titre en **bleu** (`--efk-accent2`) uniquement sur la slide de couverture/titre.
+- Titre en **bleu** (`--efk-accent2`) sur la slide de couverture/titre et les slides de clôture.
 - Les accents (rouge, turquoise, jaune, beige) servent à ponctuer : puces, pictogrammes, petits blocs de mise en valeur, barres de séparation — jamais en aplat de fond plein écran.
 - Puces de listes : chevron/flèche (pas de rond plein ni de tiret), en gris ou en couleur d'accent — inspiré des bullets vectoriels du gabarit.
 
+#### Palette étendue (pour graphiques / data-viz)
+Le gabarit officiel définit 6 teintes déclinées chacune en 6 nuances (du plus foncé au plus clair). Utilise ces séries pour des séries de graphiques, des dégradés de heatmap, ou des variantes hover/disabled — ne réutilise pas `--efk-accent2` seul pour 6 séries d'un même graphique, prends la nuance adaptée dans la teinte concernée :
+
+| Teinte | Foncé → clair |
+|---|---|
+| Rouge | `#8C1911` `#D22619` `#EA5A4F` `#F29C95` `#F7BDB9` `#FBDEDC` |
+| Bleu | `#00194D` `#002673` `#003399` `#2970FF` `#70A0FF` `#B8CFFF` |
+| Turquoise | `#005352` `#007D7A` `#00A6A3` `#7FD0CF` `#BAE3E1` `#D6F5F2` |
+| Jaune | `#978304` `#E3C406` `#FAE03C` `#FCEC8A` `#FDF3B1` `#FEF9D8` |
+| Sable | `#AD831D` `#E2B74D` `#F0DAA4` `#F6E9C8` `#F9F0DB` `#FCF8ED` |
+| Gris | `#55575B` `#808388` `#ADAFB2` `#CECFD1` `#DEDFE0` `#EFEFF0` |
+
+### Assets vectoriels vendorisés
+Ces fichiers ont été extraits/redessinés à partir du gabarit officiel et vivent dans `assets/efk/` à la racine du dépôt (chemin à adapter selon l'emplacement du fichier de sortie, ex. `../assets/efk/...` depuis `training/`). Réutilise-les tels quels, ne les régénère pas :
+- `assets/efk/logo.svg` — le logo EFK (croix suisse grise + drapeau rouge), vectoriel, fond transparent.
+- `assets/efk/pictograms/*.png` — les 15 pictogrammes métier en trait bleu/rouge (fond transparent), un fichier par domaine (ex. `sante.png`, `justice-police.png`, `projets-informatiques.png` — voir le dossier pour la liste complète).
+- `assets/efk/icon-questions.svg` — bulles de discussion bleue (avec "?") et rouge, pour la slide "Avez-vous des questions ?".
+- `assets/efk/icon-attention-ear-eye.svg` et `assets/efk/icon-attention-smiley.svg` — deux variantes pour la slide "Merci de votre attention" (oreille+œil = plus institutionnel, sourire = plus chaleureux) : choisis celle qui correspond au ton de la présentation, ou demande à l'utilisateur s'il n'y a pas de préférence évidente.
+
+Si un de ces fichiers manque (nouveau dépôt, copie partielle), recrée-le à l'identique avant de continuer plutôt que d'improviser un remplaçant visuellement différent.
+
 ### Mise en page (repères issus des positions réelles du gabarit)
 - Marge gauche/droite du bloc de contenu : ~0.88 in (≈ 45px sur une slide de 1280px de large).
-- Logo EFK : petit logo en haut à droite de chaque slide (~0.65in × 0.62in), zone réservée même si tu n'as pas le fichier de logo (laisser un espace ou un simple monogramme texte "EFK").
+- Logo EFK (`assets/efk/logo.svg`) : en haut à droite de chaque slide de contenu (~0.65in × 0.62in) — c'est la position officielle du gabarit, ne pas le mettre à gauche sauf demande explicite.
 - Pied de page sur chaque slide de contenu : à gauche `Titre | Lieu | Date | Prénom Nom`, à droite le numéro de slide — texte petit, gris.
-- Titre de slide toujours aligné à gauche, jamais centré (sauf slide de couverture).
+- Titre de slide toujours aligné à gauche, jamais centré (sauf slide de couverture et slides de clôture).
 
 ### Types de slides à disposition (calqués sur les masques du gabarit)
-1. **Couverture (avec/sans icônes)** — titre bleu centré verticalement dans le tiers supérieur, sous-titre en dessous, pas de pied de page.
+1. **Couverture (avec/sans icônes)** — fond gris (`--efk-bg-grey`), logo en haut à droite, titre bleu centré verticalement dans le tiers supérieur, sous-titre en dessous, pas de pied de page. La variante "avec icônes" disperse quelques-uns des pictogrammes de `assets/efk/pictograms/` en arrière-plan (discrets, opacité réduite ou petite taille, jamais au centre où se trouve le texte).
 2. **Sommaire / Agenda** — titre "Willkommen"-style + liste des sujets à droite.
 3. **Titre + contenu** — titre noir en haut, corps de texte/liste à puces en dessous (jusqu'à 3 niveaux d'indentation).
 4. **Deux contenus** — deux colonnes de contenu côte à côte sous un même titre.
 5. **Comparaison** — deux colonnes avec chacune un sous-titre + contenu (pour comparer deux options/concepts).
-6. **Slide de remerciement / questions** — texte centré, grand, peu d'éléments ("Avez-vous des questions ?", "Merci de votre attention").
+6. **Clôture — Questions** — fond gris, titre bleu "Avez-vous des questions ?", icône `assets/efk/icon-questions.svg`, pas de pied de page.
+7. **Clôture — Remerciement** — fond gris, titre bleu "Merci de votre attention", icône `assets/efk/icon-attention-ear-eye.svg` ou `icon-attention-smiley.svg`, pas de pied de page.
 
-Choisis le type de slide le plus adapté à chaque section du contenu fourni ; ne force pas tout dans un seul type.
+Choisis le type de slide le plus adapté à chaque section du contenu fourni ; ne force pas tout dans un seul type. Une présentation se termine typiquement par les deux slides de clôture (Questions puis Remerciement), dans cet ordre ou l'inverse selon la préférence de l'utilisateur.
 
 ## Processus
 1. Si le contenu à présenter n'est pas clair ou incomplet, pose la question avant de générer le fichier.
