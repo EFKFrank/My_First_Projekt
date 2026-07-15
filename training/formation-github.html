@@ -7,6 +7,7 @@
     --efk-text:       #000000;
     --efk-text-soft:  #48494b;
     --efk-bg:         #FFFFFF;
+    --efk-bg-grey:    #D1D3D4;
     --efk-canvas:     #e7e8e9;
     --efk-grey-dark:  #ADAFB2;
     --efk-grey-light: #D1D3D4;
@@ -70,10 +71,8 @@
     position: absolute;
     top: 42px;
     right: 90px;
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--efk-grey-dark);
+    width: 62px;
+    height: auto;
   }
 
   .slide-footer {
@@ -107,21 +106,46 @@
   /* ---- cover / closing ---- */
   .content-slide.cover,
   .content-slide.closing {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background: var(--efk-bg-grey);
   }
-  .content-slide.cover .slide-title { font-size: 54px; margin-bottom: 12px; }
-  .content-slide.cover .slide-subtitle { font-size: 24px; color: var(--efk-text-soft); margin: 0; }
+  .content-slide.cover .slide-title { font-size: 40px; margin-bottom: 10px; }
+  .content-slide.cover .slide-subtitle { font-size: 22px; color: var(--efk-text-soft); margin: 0; }
   .content-slide.cover .cover-rule {
     width: 64px;
     height: 4px;
     background: var(--efk-accent1);
     margin: 0 0 20px;
   }
-  .content-slide.closing { text-align: center; align-items: center; }
-  .content-slide.closing .slide-title { font-size: 48px; }
-  .content-slide.closing .slide-subtitle { font-size: 22px; color: var(--efk-text-soft); }
+  .content-slide.cover .institution-lockup {
+    position: absolute;
+    top: 68px;
+    right: 90px;
+    width: 274px;
+    height: auto;
+  }
+
+  .content-slide.closing {
+    display: flex;
+    align-items: center;
+  }
+  .content-slide.closing .slide-title {
+    font-size: 40px;
+    max-width: 620px;
+    margin: 0;
+  }
+  .content-slide.closing .closing-icon {
+    position: absolute;
+    right: 110px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 360px;
+    height: auto;
+  }
+
+  /* ---- cover decorative pictograms (pleine opacité, positions officielles) ---- */
+  .cover-picto {
+    position: absolute;
+  }
 
   /* ---- agenda ---- */
   .agenda-grid {
@@ -264,17 +288,35 @@
     <!-- Slide 1 : Couverture -->
     <section>
       <div class="content-slide cover">
+        <img class="institution-lockup" src="../assets/efk/institution-lockup.png" alt="Eidgenössische Finanzkontrolle / Contrôle fédéral des finances / Controllo federale delle finanze / Controlla federala da finanzas / Swiss Federal Audit Office">
+
+        <img class="cover-picto" src="../assets/efk/pictograms/finances-publiques-impots.svg" alt="" style="left:173px; top:300px; width:93px; height:72px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/economie-agriculture.svg" alt="" style="left:404px; top:285px; width:90px; height:87px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/formation-recherche.svg" alt="" style="left:652px; top:291px; width:81px; height:81px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/sante.svg" alt="" style="left:864px; top:294px; width:93px; height:78px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/assurances-sociales.svg" alt="" style="left:1103px; top:270px; width:81px; height:102px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/transport-environnement.svg" alt="" style="left:171px; top:419px; width:93px; height:84px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/armee-protection-population.svg" alt="" style="left:413px; top:413px; width:72px; height:90px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/relations-etranger.svg" alt="" style="left:644px; top:407px; width:96px; height:96px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/justice-police.svg" alt="" style="left:859px; top:428px; width:102px; height:75px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/projets-informatiques.svg" alt="" style="left:1095px; top:428px; width:96px; height:75px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/culture-sport.svg" alt="" style="left:172px; top:553px; width:93px; height:87px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/energie-communication.svg" alt="" style="left:396px; top:551px; width:105px; height:90px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/achats-publics.svg" alt="" style="left:649px; top:553px; width:87px; height:87px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/administration-federale.svg" alt="" style="left:872px; top:556px; width:75px; height:84px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/autres-audits.svg" alt="" style="left:1104px; top:562px; width:78px; height:78px;">
+
         <div class="cover-rule"></div>
         <p class="slide-eyebrow">EFK · Formation interne</p>
         <h1 class="slide-title">Formation GitHub<br>Notions de base</h1>
-        <p class="slide-subtitle">Comprendre Git et GitHub avant le premier commit et le premier push.</p>
+        <p class="slide-subtitle">Une introduction</p>
       </div>
     </section>
 
     <!-- Slide 2 : Sommaire -->
     <section>
       <div class="content-slide">
-        <p class="slide-logo">EFK</p>
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
         <div class="agenda-grid">
           <div>
             <p class="slide-eyebrow">Au programme</p>
@@ -295,7 +337,7 @@
     <!-- Slide 3 -->
     <section>
       <div class="content-slide">
-        <p class="slide-logo">EFK</p>
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
         <p class="slide-eyebrow">01 — Introduction</p>
         <h1 class="slide-title">Chaque commit est un instantané, pas une différence</h1>
         <p class="lede">Git modélise l'historique comme un graphe orienté acyclique (DAG) d'objets identifiés par hachage SHA-1 — pas une suite de patchs appliqués les uns après les autres.</p>
@@ -321,7 +363,7 @@
     <!-- Slide 4 -->
     <section>
       <div class="content-slide">
-        <p class="slide-logo">EFK</p>
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
         <p class="slide-eyebrow">02 — Vocabulaire</p>
         <h1 class="slide-title">Six objets et références à connaître</h1>
         <p class="lede">Le modèle de données de Git repose sur peu de primitives. Une fois posées, tout le workflow devient prévisible.</p>
@@ -358,7 +400,7 @@
     <!-- Slide 5 -->
     <section>
       <div class="content-slide">
-        <p class="slide-logo">EFK</p>
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
         <p class="slide-eyebrow">03 — Mise en route</p>
         <h1 class="slide-title">De zéro à un premier commit signé</h1>
         <p class="lede">Quatre étapes pour une configuration locale correcte, avant le premier <code>push</code>.</p>
@@ -399,7 +441,7 @@
     <!-- Slide 6 -->
     <section>
       <div class="content-slide">
-        <p class="slide-logo">EFK</p>
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
         <p class="slide-eyebrow">04 — Workflow</p>
         <h1 class="slide-title">Le cycle d'une branche de fonctionnalité</h1>
         <p class="lede">De la création de la branche jusqu'à sa publication, en passant par un index construit hunk par hunk.</p>
@@ -420,7 +462,7 @@
     <!-- Slide 7 -->
     <section>
       <div class="content-slide">
-        <p class="slide-logo">EFK</p>
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
         <p class="slide-eyebrow">05 — Collaboration</p>
         <h1 class="slide-title">Fusionner sans perdre le fil de l'historique</h1>
         <p class="lede">GitHub ajoute une couche de revue et d'automatisation au-dessus des primitives de fusion de Git.</p>
@@ -447,11 +489,19 @@
       </div>
     </section>
 
-    <!-- Slide 8 : Clôture -->
+    <!-- Slide 8 : Clôture — Questions -->
+    <section>
+      <div class="content-slide closing">
+        <h1 class="slide-title">Avez-vous des questions ?</h1>
+        <img class="closing-icon" src="../assets/efk/icon-questions.svg" alt="">
+      </div>
+    </section>
+
+    <!-- Slide 9 : Clôture — Remerciement -->
     <section>
       <div class="content-slide closing">
         <h1 class="slide-title">Merci de votre attention</h1>
-        <p class="slide-subtitle">Avez-vous des questions ?</p>
+        <img class="closing-icon" src="../assets/efk/icon-attention-smiley.svg" alt="">
       </div>
     </section>
 
