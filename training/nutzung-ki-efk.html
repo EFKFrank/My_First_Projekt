@@ -42,7 +42,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    padding: 52px 90px 54px;
+    padding: 48px 90px 46px;
   }
 
   .slide-eyebrow {
@@ -181,10 +181,10 @@
   /* ---- chevron list ---- */
   ul.efk-list {
     list-style: none;
-    margin: 0 0 14px;
+    margin: 0 0 6px;
     padding: 0;
     display: grid;
-    gap: 10px;
+    gap: 5px;
   }
   ul.efk-list li {
     display: flex;
@@ -288,13 +288,34 @@
   .callout {
     border-left: 4px solid var(--efk-accent1);
     background: #faf1f0;
-    padding: 10px 18px;
-    font-size: 18px;
-    line-height: 1.4;
+    padding: 7px 16px;
+    font-size: 17px;
+    line-height: 1.3;
     color: var(--efk-text);
-    margin: 10px 0;
+    margin: 6px 0;
   }
   .callout b { color: var(--efk-accent1); }
+  .callout ul {
+    list-style: none;
+    margin: 3px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 3px;
+  }
+  .callout ul li {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .callout ul li::before {
+    content: '';
+    flex: none;
+    width: 0; height: 0;
+    margin-top: 6px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid var(--efk-accent1);
+  }
 
   /* ---- key question ---- */
   .key-question {
@@ -311,8 +332,8 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--efk-grey-dark);
-    margin: 16px 0 8px;
-    padding-top: 12px;
+    margin: 10px 0 6px;
+    padding-top: 8px;
     border-top: 1px solid var(--efk-grey-light);
   }
   .subhead:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
@@ -444,7 +465,13 @@
           <li>Revisionsnotizen.</li>
           <li>Zwischenzusammenfassungen, Ergebnisdokumente.</li>
         </ul>
-        <div class="callout"><b>Ausnahme</b>: Der Einsatz von KI ist möglich, wenn er zwingend erforderlich ist (Methode oder Frist) und die vollständige Anonymisierung der Quellen gewährleistet ist.</div>
+        <div class="callout">
+          <b>Ausnahmen</b>
+          <ul>
+            <li>Der Einsatz von KI ist möglich, wenn er zwingend erforderlich ist (Methode oder Frist) und die vollständige Anonymisierung der Quellen gewährleistet ist.</li>
+            <li>Der Einsatz der KI als «Sparringpartner» in der Prüfungsphase ist zulässig, sofern keine klassifizierten Informationen in den Dialog eingegeben werden.</li>
+          </ul>
+        </div>
         <p class="subhead">Berichtsphase</p>
         <ul class="efk-list" style="margin-bottom: 0;">
           <li>Berichtsentwürfe bis und mit Version V02 (für die EFK definitive Fassung, ohne Stellungnahmen).</li>
