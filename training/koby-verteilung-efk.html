@@ -1,0 +1,321 @@
+<meta charset="utf-8">
+<title>Verteilung von KOBY in der EFK</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
+<style>
+  :root {
+    --efk-text:       #000000;
+    --efk-text-soft:  #48494b;
+    --efk-bg:         #FFFFFF;
+    --efk-bg-grey:    #D1D3D4;
+    --efk-canvas:     #e7e8e9;
+    --efk-grey-dark:  #ADAFB2;
+    --efk-grey-light: #D1D3D4;
+    --efk-accent1:    #EA5A4F;
+    --efk-accent2:    #003399;
+    --efk-accent3:    #00A6A3;
+    --efk-accent4:    #FAE03C;
+    --efk-accent5:    #F0DAA4;
+
+    --efk-font: Calibri, Candara, "Segoe UI", Optima, Arial, sans-serif;
+    --efk-font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--efk-canvas); }
+
+  .reveal { font-family: var(--efk-font); color: var(--efk-text); font-size: 20px; }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { text-align: left; height: 100%; }
+
+  .reveal .progress { color: var(--efk-accent2); height: 4px; }
+  .reveal .controls { color: var(--efk-grey-dark); }
+  .reveal .slide-number {
+    color: var(--efk-grey-dark);
+    background: transparent;
+    font-family: var(--efk-font);
+    font-size: 14px;
+  }
+
+  /* ---- content canvas shared by every non-cover slide ---- */
+  .content-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 52px 90px 54px;
+  }
+
+  .slide-eyebrow {
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--efk-grey-dark);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .slide-title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--efk-text);
+    margin: 0 0 14px;
+    max-width: 970px;
+  }
+
+  .content-slide.cover .slide-title,
+  .content-slide.closing .slide-title {
+    color: var(--efk-accent2);
+  }
+
+  .slide-logo {
+    position: absolute;
+    top: 42px;
+    right: 90px;
+    width: 62px;
+    height: auto;
+  }
+
+  .slide-footer {
+    position: absolute;
+    left: 90px;
+    right: 90px;
+    bottom: 34px;
+    font-size: 15px;
+    color: var(--efk-grey-dark);
+    border-top: 1px solid var(--efk-grey-light);
+    padding-top: 9px;
+  }
+
+  .lede {
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--efk-text-soft);
+    max-width: 52rem;
+    margin: 0 0 14px;
+  }
+
+  code {
+    font-family: var(--efk-font-mono);
+    background: #f1f1f2;
+    color: var(--efk-accent2);
+    padding: 1px 8px;
+    border-radius: 3px;
+    font-size: 0.88em;
+  }
+
+  /* ---- cover / closing ---- */
+  .content-slide.cover,
+  .content-slide.closing {
+    background: var(--efk-bg-grey);
+  }
+  .content-slide.cover .slide-title { font-size: 48px; margin-bottom: 10px; max-width: 800px; }
+  .content-slide.cover .slide-subtitle { font-size: 26px; color: var(--efk-text-soft); margin: 0; }
+  .content-slide.cover .cover-rule {
+    width: 64px;
+    height: 4px;
+    background: var(--efk-accent1);
+    margin: 0 0 20px;
+  }
+  .content-slide.cover .institution-lockup {
+    position: absolute;
+    top: 68px;
+    right: 90px;
+    width: 274px;
+    height: auto;
+  }
+
+  .content-slide.closing {
+    display: flex;
+    align-items: center;
+  }
+  .content-slide.closing .slide-title {
+    font-size: 46px;
+    max-width: 620px;
+    margin: 0;
+  }
+  .content-slide.closing .closing-icon {
+    position: absolute;
+    right: 110px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 360px;
+    height: auto;
+  }
+
+  /* ---- cover decorative pictograms (volle Deckkraft, offizielle Positionen) ---- */
+  .cover-picto {
+    position: absolute;
+  }
+
+  /* ---- agenda ---- */
+  .agenda-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 46px;
+    height: 100%;
+    align-items: center;
+  }
+  .agenda-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .agenda-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--efk-text);
+  }
+  .agenda-list .num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--efk-accent2);
+    min-width: 34px;
+  }
+
+  /* ---- chevron list ---- */
+  ul.efk-list {
+    list-style: none;
+    margin: 0 0 14px;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  ul.efk-list li {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    line-height: 1.35;
+    color: var(--efk-text-soft);
+    font-size: 22px;
+  }
+  ul.efk-list li::before {
+    content: '';
+    flex: none;
+    width: 0; height: 0;
+    margin-top: 8px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 9px solid var(--efk-accent1);
+  }
+  ul.efk-list b { color: var(--efk-text); font-weight: 700; }
+</style>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Folie 1 : Titelfolie -->
+    <section>
+      <div class="content-slide cover">
+        <img class="institution-lockup" src="../assets/efk/institution-lockup.png" alt="Eidgenössische Finanzkontrolle / Contrôle fédéral des finances / Controllo federale delle finanze / Controlla federala da finanzas / Swiss Federal Audit Office">
+
+        <img class="cover-picto" src="../assets/efk/pictograms/finances-publiques-impots.svg" alt="" style="left:173px; top:300px; width:93px; height:72px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/economie-agriculture.svg" alt="" style="left:404px; top:285px; width:90px; height:87px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/formation-recherche.svg" alt="" style="left:652px; top:291px; width:81px; height:81px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/sante.svg" alt="" style="left:864px; top:294px; width:93px; height:78px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/assurances-sociales.svg" alt="" style="left:1103px; top:270px; width:81px; height:102px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/transport-environnement.svg" alt="" style="left:171px; top:419px; width:93px; height:84px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/armee-protection-population.svg" alt="" style="left:413px; top:413px; width:72px; height:90px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/relations-etranger.svg" alt="" style="left:644px; top:407px; width:96px; height:96px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/justice-police.svg" alt="" style="left:859px; top:428px; width:102px; height:75px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/projets-informatiques.svg" alt="" style="left:1095px; top:428px; width:96px; height:75px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/culture-sport.svg" alt="" style="left:172px; top:553px; width:93px; height:87px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/energie-communication.svg" alt="" style="left:396px; top:551px; width:105px; height:90px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/achats-publics.svg" alt="" style="left:649px; top:553px; width:87px; height:87px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/administration-federale.svg" alt="" style="left:872px; top:556px; width:75px; height:84px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/autres-audits.svg" alt="" style="left:1104px; top:562px; width:78px; height:78px;">
+
+        <div class="cover-rule"></div>
+        <p class="slide-eyebrow">EFK</p>
+        <h1 class="slide-title">Verteilung von KOBY<br>in der EFK</h1>
+      </div>
+    </section>
+
+    <!-- Folie 2 : Inhaltsverzeichnis -->
+    <section>
+      <div class="content-slide">
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
+        <div class="agenda-grid">
+          <div>
+            <p class="slide-eyebrow">Programm</p>
+            <h1 class="slide-title">Zwei Punkte</h1>
+          </div>
+          <ol class="agenda-list">
+            <li><span class="num">01</span> Verteilung der Lizenzen August–Dezember 2026</li>
+            <li><span class="num">02</span> Begleitung</li>
+          </ol>
+        </div>
+        <div class="slide-footer">Verteilung von KOBY in der EFK | [Ort] | [Datum]</div>
+      </div>
+    </section>
+
+    <!-- Folie 3 : Verteilung der Lizenzen -->
+    <section>
+      <div class="content-slide">
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
+        <p class="slide-eyebrow">01 — Lizenzen</p>
+        <h1 class="slide-title">Verteilung der Lizenzen August–Dezember 2026</h1>
+        <ul class="efk-list">
+          <li>Budget: 5000 Franken.</li>
+          <li>37 Koby-Web-Lizenzen, verteilt nach Bedarf.</li>
+          <li>2 Koby-Outlook-Lizenzen.</li>
+          <li>4550 Franken reserviert (2 Reserven).</li>
+        </ul>
+        <div class="slide-footer">Verteilung von KOBY in der EFK | [Ort] | [Datum]</div>
+      </div>
+    </section>
+
+    <!-- Folie 4 : Begleitung -->
+    <section>
+      <div class="content-slide">
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
+        <p class="slide-eyebrow">02 — Begleitung</p>
+        <h1 class="slide-title">Begleitung</h1>
+        <ul class="efk-list">
+          <li>Punktuelle Bedarfskontrolle.</li>
+          <li>Dokumentation der interessantesten Projekte.</li>
+          <li>Integration in die Plattform KOBY/KI-Erfa.</li>
+          <li>Neue Bilanz im Dezember 2027.</li>
+        </ul>
+        <div class="slide-footer">Verteilung von KOBY in der EFK | [Ort] | [Datum]</div>
+      </div>
+    </section>
+
+    <!-- Folie 5 : Schlusswort — Fragen -->
+    <section>
+      <div class="content-slide closing">
+        <h1 class="slide-title">Haben Sie Fragen?</h1>
+        <img class="closing-icon" src="../assets/efk/icon-questions.svg" alt="">
+      </div>
+    </section>
+
+    <!-- Folie 6 : Schlusswort — Dank -->
+    <section>
+      <div class="content-slide closing">
+        <h1 class="slide-title">Besten Dank für Ihre Aufmerksamkeit</h1>
+        <img class="closing-icon" src="../assets/efk/icon-attention-ear-eye.svg" alt="">
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 720,
+    margin: 0,
+    center: false,
+    hash: true,
+    controls: true,
+    progress: true,
+    slideNumber: 'c/t',
+    transition: 'fade'
+  });
+</script>
