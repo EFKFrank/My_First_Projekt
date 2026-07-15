@@ -28,12 +28,16 @@ Si `$ARGUMENTS` désigne un fichier existant du dépôt (ex. `training/formation
       width: 1280,
       height: 720,
       margin: 0,
+      center: false,
       hash: true,
+      controls: true,
+      progress: true,
       slideNumber: 'c/t',
       transition: 'fade'
     });
   </script>
   ```
+  `center: false` est **obligatoire** : sans lui, Reveal.js centre verticalement le contenu de chaque slide par défaut, ce qui contredit la règle "titre toujours en haut à gauche" ci-dessous.
 - Utiliser les mécanismes natifs de Reveal.js plutôt que de les réinventer : `slideNumber` pour la pagination, la barre de progression intégrée (`Reveal.configure({ progress: true })` si souhaité), `data-transition` par slide si un type de slide a besoin d'une transition différente, et la navigation clavier/tactile déjà fournie par Reveal (ne pas coder de navigation maison).
 - Le logo EFK et le fil `Titre | Lieu | Date | Prénom Nom` doivent apparaître sur chaque slide de contenu. Reveal.js redimensionne `.reveal .slides` via une transformation CSS (`scale`) : un élément en `position: fixed` placé en dehors de `.reveal` ne suivrait pas ce zoom et se désaligne au redimensionnement de la fenêtre. Place donc ce logo/footer en `position: absolute` **à l'intérieur de chaque `<section>`** de contenu (il est alors mis à l'échelle avec le reste de la slide) ; ne le mets pas sur les slides de couverture/clôture (qui ont leur propre traitement, voir plus bas).
 
