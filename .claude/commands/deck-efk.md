@@ -48,10 +48,13 @@ Si `$ARGUMENTS` désigne un fichier existant du dépôt (ex. `training/formation
 - Police officielle : **Calibri** (titres ET corps de texte — c'est aussi bien la police "majeure" que "mineure" du thème).
 - Pile de fallback web (Calibri n'est pas garantie hors Windows) :
   `font-family: Calibri, Candara, "Segoe UI", Optima, Arial, sans-serif;`
-- Corps de texte : 20pt (≈ 1.25rem), interligne 90%.
-- Titre de slide : 28pt (≈ 1.75rem), **gras**.
-- Sur-titre / "Rubrique" (kicker au-dessus du titre) : 12pt (≈ 0.75rem).
-- Pied de page / numéro de page : 18pt (≈ 1.125rem).
+- Le texte doit rester lisible **projeté, à une dizaine de mètres** — vise ces tailles minimales (px, sur le canevas 1280×720) plutôt que les tailles "documentaires" plus petites d'un PDF/Word :
+  - Titre de slide : **40px**, gras.
+  - Sur-titre / "Rubrique" (kicker au-dessus du titre) : **18px**.
+  - Corps de texte / listes à puces (`.efk-list`, `.two-col`) : **19-22px**, interligne serré (1.35-1.45).
+  - Cartes/tableaux compacts (ex. `.term-card`) : **18px** minimum pour le texte courant, jamais en dessous de 16px même pour du texte secondaire.
+  - Pied de page / numéro de page : **15px** (seul élément qui peut rester plus petit, car secondaire et périphérique).
+  - Si une grille à plusieurs colonnes (type `term-grid`) ne laisse pas assez de place pour ce corps de texte à cette taille, **passe en lignes empilées pleine largeur** plutôt que de réduire la police en dessous de ces seuils.
 
 ### Couleurs (thème "CH_CDF")
 ```css
