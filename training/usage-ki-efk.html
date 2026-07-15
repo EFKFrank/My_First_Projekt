@@ -1,0 +1,500 @@
+<meta charset="utf-8">
+<title>Règles d'utilisation de l'IA dans le CDF</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
+<style>
+  :root {
+    --efk-text:       #000000;
+    --efk-text-soft:  #48494b;
+    --efk-bg:         #FFFFFF;
+    --efk-bg-grey:    #D1D3D4;
+    --efk-canvas:     #e7e8e9;
+    --efk-grey-dark:  #ADAFB2;
+    --efk-grey-light: #D1D3D4;
+    --efk-accent1:    #EA5A4F;
+    --efk-accent2:    #003399;
+    --efk-accent3:    #00A6A3;
+    --efk-accent4:    #FAE03C;
+    --efk-accent5:    #F0DAA4;
+
+    --efk-font: Calibri, Candara, "Segoe UI", Optima, Arial, sans-serif;
+    --efk-font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--efk-canvas); }
+
+  .reveal { font-family: var(--efk-font); color: var(--efk-text); font-size: 20px; }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { text-align: left; height: 100%; }
+
+  .reveal .progress { color: var(--efk-accent2); height: 4px; }
+  .reveal .controls { color: var(--efk-grey-dark); }
+  .reveal .slide-number {
+    color: var(--efk-grey-dark);
+    background: transparent;
+    font-family: var(--efk-font);
+    font-size: 14px;
+  }
+
+  /* ---- content canvas shared by every non-cover slide ---- */
+  .content-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 52px 90px 54px;
+  }
+
+  .slide-eyebrow {
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--efk-grey-dark);
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .slide-title {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--efk-text);
+    margin: 0 0 14px;
+    max-width: 970px;
+  }
+
+  .content-slide.cover .slide-title,
+  .content-slide.closing .slide-title {
+    color: var(--efk-accent2);
+  }
+
+  .slide-logo {
+    position: absolute;
+    top: 42px;
+    right: 90px;
+    width: 62px;
+    height: auto;
+  }
+
+  .slide-footer {
+    position: absolute;
+    left: 90px;
+    right: 90px;
+    bottom: 34px;
+    font-size: 15px;
+    color: var(--efk-grey-dark);
+    border-top: 1px solid var(--efk-grey-light);
+    padding-top: 9px;
+  }
+
+  .lede {
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--efk-text-soft);
+    max-width: 52rem;
+    margin: 0 0 14px;
+  }
+
+  code {
+    font-family: var(--efk-font-mono);
+    background: #f1f1f2;
+    color: var(--efk-accent2);
+    padding: 1px 8px;
+    border-radius: 3px;
+    font-size: 0.88em;
+  }
+
+  /* ---- cover / closing ---- */
+  .content-slide.cover,
+  .content-slide.closing {
+    background: var(--efk-bg-grey);
+  }
+  .content-slide.cover .slide-title { font-size: 48px; margin-bottom: 10px; }
+  .content-slide.cover .slide-subtitle { font-size: 26px; color: var(--efk-text-soft); margin: 0; }
+  .content-slide.cover .cover-rule {
+    width: 64px;
+    height: 4px;
+    background: var(--efk-accent1);
+    margin: 0 0 20px;
+  }
+  .content-slide.cover .institution-lockup {
+    position: absolute;
+    top: 68px;
+    right: 90px;
+    width: 274px;
+    height: auto;
+  }
+
+  .content-slide.closing {
+    display: flex;
+    align-items: center;
+  }
+  .content-slide.closing .slide-title {
+    font-size: 46px;
+    max-width: 620px;
+    margin: 0;
+  }
+  .content-slide.closing .closing-icon {
+    position: absolute;
+    right: 110px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 360px;
+    height: auto;
+  }
+
+  /* ---- cover decorative pictograms (pleine opacité, positions officielles) ---- */
+  .cover-picto {
+    position: absolute;
+  }
+
+  /* ---- agenda ---- */
+  .agenda-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 46px;
+    height: 100%;
+    align-items: center;
+  }
+  .agenda-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .agenda-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--efk-text);
+  }
+  .agenda-list .num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--efk-accent2);
+    min-width: 34px;
+  }
+
+  /* ---- chevron list ---- */
+  ul.efk-list {
+    list-style: none;
+    margin: 0 0 14px;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  ul.efk-list li {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    line-height: 1.35;
+    color: var(--efk-text-soft);
+    font-size: 21px;
+  }
+  ul.efk-list li::before {
+    content: '';
+    flex: none;
+    width: 0; height: 0;
+    margin-top: 7px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 9px solid var(--efk-accent1);
+  }
+  ul.efk-list b { color: var(--efk-text); font-weight: 700; }
+
+  /* ---- two content columns ---- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 14px;
+    align-items: start;
+  }
+  .two-col .col .k {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--efk-accent2);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .two-col .col p {
+    margin: 0 0 8px;
+    line-height: 1.4;
+    font-size: 19px;
+    color: var(--efk-text-soft);
+  }
+
+  /* ---- classification rows (interne/confidentiel/secret) ---- */
+  .term-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--efk-grey-light);
+    border: 1px solid var(--efk-grey-light);
+    margin-bottom: 14px;
+  }
+  .term-card {
+    background: var(--efk-bg);
+    padding: 12px 18px;
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    column-gap: 22px;
+  }
+  .term-card .term {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    font-weight: 700;
+    color: var(--efk-accent2);
+    font-size: 22px;
+  }
+  .term-card .def {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    line-height: 1.35;
+    color: var(--efk-text-soft);
+    font-size: 18px;
+  }
+  .term-card .ref {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 3px;
+    font-size: 14px;
+    color: var(--efk-grey-dark);
+  }
+
+  /* ---- principle chips ---- */
+  .principle-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 6px;
+  }
+  .principle-chips span {
+    background: var(--efk-accent2);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 20px;
+  }
+
+  /* ---- callout / conclusion box ---- */
+  .callout {
+    border-left: 4px solid var(--efk-accent1);
+    background: #faf1f0;
+    padding: 10px 18px;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--efk-text);
+    margin: 10px 0;
+  }
+  .callout b { color: var(--efk-accent1); }
+
+  /* ---- key question ---- */
+  .key-question {
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--efk-accent2);
+    margin: 10px 0 0;
+  }
+
+  /* ---- subheading within a content slide ---- */
+  .subhead {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--efk-grey-dark);
+    margin: 16px 0 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--efk-grey-light);
+  }
+  .subhead:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+</style>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- Slide 1 : Couverture -->
+    <section>
+      <div class="content-slide cover">
+        <img class="institution-lockup" src="../assets/efk/institution-lockup.png" alt="Eidgenössische Finanzkontrolle / Contrôle fédéral des finances / Controllo federale delle finanze / Controlla federala da finanzas / Swiss Federal Audit Office">
+
+        <img class="cover-picto" src="../assets/efk/pictograms/finances-publiques-impots.svg" alt="" style="left:173px; top:300px; width:93px; height:72px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/economie-agriculture.svg" alt="" style="left:404px; top:285px; width:90px; height:87px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/formation-recherche.svg" alt="" style="left:652px; top:291px; width:81px; height:81px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/sante.svg" alt="" style="left:864px; top:294px; width:93px; height:78px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/assurances-sociales.svg" alt="" style="left:1103px; top:270px; width:81px; height:102px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/transport-environnement.svg" alt="" style="left:171px; top:419px; width:93px; height:84px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/armee-protection-population.svg" alt="" style="left:413px; top:413px; width:72px; height:90px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/relations-etranger.svg" alt="" style="left:644px; top:407px; width:96px; height:96px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/justice-police.svg" alt="" style="left:859px; top:428px; width:102px; height:75px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/projets-informatiques.svg" alt="" style="left:1095px; top:428px; width:96px; height:75px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/culture-sport.svg" alt="" style="left:172px; top:553px; width:93px; height:87px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/energie-communication.svg" alt="" style="left:396px; top:551px; width:105px; height:90px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/achats-publics.svg" alt="" style="left:649px; top:553px; width:87px; height:87px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/administration-federale.svg" alt="" style="left:872px; top:556px; width:75px; height:84px;">
+        <img class="cover-picto" src="../assets/efk/pictograms/autres-audits.svg" alt="" style="left:1104px; top:562px; width:78px; height:78px;">
+
+        <div class="cover-rule"></div>
+        <p class="slide-eyebrow">EFK · CDF</p>
+        <h1 class="slide-title">Règles d'utilisation de l'IA<br>dans le CDF</h1>
+        <p class="slide-subtitle">Une tentative.</p>
+      </div>
+    </section>
+
+    <!-- Slide 2 : Sommaire -->
+    <section>
+      <div class="content-slide">
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
+        <div class="agenda-grid">
+          <div>
+            <p class="slide-eyebrow">Au programme</p>
+            <h1 class="slide-title">Quatre repères pour l'usage de l'IA</h1>
+          </div>
+          <ol class="agenda-list">
+            <li><span class="num">01</span> La sécurité de l'information — classification des documents</li>
+            <li><span class="num">02</span> Les données personnelles protégées</li>
+            <li><span class="num">03</span> Documents d'audit à considérer comme internes</li>
+            <li><span class="num">04</span> Autres documents du CDF à considérer comme internes</li>
+          </ol>
+        </div>
+        <div class="slide-footer">Règles d'utilisation de l'IA dans le CDF | [Lieu] | [Date]</div>
+      </div>
+    </section>
+
+    <!-- Slide 3 : Classification LSI/OSI -->
+    <section>
+      <div class="content-slide">
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
+        <p class="slide-eyebrow">01 — Loi sur la sécurité de l'information (LSI, RS 128)</p>
+        <h1 class="slide-title">Trois échelons de classification de l'information</h1>
+        <div class="term-grid">
+          <div class="term-card">
+            <span class="term">Interne</span>
+            <p class="def">Une divulgation à une personne non autorisée est susceptible de <b>nuire</b> aux intérêts protégés (fonctionnement du Conseil fédéral, de l'administration ou de l'armée, poursuite pénale, sécurité des personnes, sécurité nucléaire, politique extérieure/économique, relations Confédération–cantons). Sont aussi classées "interne" les informations permettant de déduire un contenu confidentiel ou secret.</p>
+            <span class="ref">Art. 13 al. 1 LSI ; art. 18 OSI</span>
+          </div>
+          <div class="term-card">
+            <span class="term">Confidentiel</span>
+            <p class="def">Mêmes intérêts, mais susceptibles d'être nuis <b>considérablement</b> — p. ex. capacité de décision du Conseil fédéral ou du Parlement entravée plusieurs jours, sécurité de la population compromise, désavantage diplomatique ou économique considérable.</p>
+            <span class="ref">Art. 13 al. 2 LSI ; art. 19 OSI</span>
+          </div>
+          <div class="term-card">
+            <span class="term">Secret</span>
+            <p class="def">Mêmes intérêts nuis <b>gravement</b> — p. ex. capacité de décision annihilée durant des jours ou entravée des semaines, divulgation de sources stratégiques du renseignement, conséquences lourdes (embargo, sanctions) durant des semaines.</p>
+            <span class="ref">Art. 13 al. 3 LSI ; art. 20 OSI</span>
+          </div>
+        </div>
+        <div class="callout">La classification relève de la <b>responsabilité de chaque office</b>. Aucun de ces documents — y compris "interne" — ne peut être traité sur des systèmes d'IA commerciaux ; des règles de chiffrement différenciées s'appliquent selon l'échelon.</div>
+        <p class="key-question">Quels documents du CDF sont tenus comme documents internes ?</p>
+        <div class="slide-footer">Règles d'utilisation de l'IA dans le CDF | [Lieu] | [Date]</div>
+      </div>
+    </section>
+
+    <!-- Slide 4 : LPD -->
+    <section>
+      <div class="content-slide">
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
+        <p class="slide-eyebrow">02 — Protection des données (LPD, RS 235.1)</p>
+        <h1 class="slide-title">Quelles données personnelles sont protégées ?</h1>
+
+        <p class="subhead">Principes généraux applicables à tout traitement (art. 6 LPD)</p>
+        <div class="principle-chips">
+          <span>Licéité</span><span>Bonne foi</span><span>Proportionnalité</span><span>Finalité</span><span>Reconnaissabilité</span><span>Exactitude</span><span>Sécurité</span>
+        </div>
+
+        <p class="subhead">Règles spécifiques selon le type de personne concerné</p>
+        <div class="two-col">
+          <div class="col">
+            <span class="k">Personnes physiques — art. 5 let. c LPD</span>
+            <p>Données sensibles : santé, sphère intime, origine raciale ou ethnique, opinions religieuses/philosophiques/politiques/syndicales, données génétiques et biométriques, poursuites/sanctions pénales et administratives, mesures d'aide sociale.</p>
+            <span class="k">Profilage — art. 5 let. f/g LPD</span>
+            <p>Traitement automatisé évaluant des aspects personnels — performance, situation économique, santé, comportement, localisation.</p>
+          </div>
+          <div class="col">
+            <span class="k">Personnes morales — art. 57r al. 2 LOGA</span>
+            <p>La LPD ne protège plus les personnes morales depuis le 1<sup>er</sup> septembre 2023. La Confédération impose toutefois à ses offices des règles particulières : données relatives à des poursuites ou sanctions pénales/administratives ; données relatives à des secrets professionnels, d'affaires ou de fabrication.</p>
+          </div>
+        </div>
+        <p class="key-question">La gestion de ces données au sein du CDF fait l'objet d'un traitement particulier (proportionnalité, cryptage, stockage).</p>
+        <div class="slide-footer">Règles d'utilisation de l'IA dans le CDF | [Lieu] | [Date]</div>
+      </div>
+    </section>
+
+    <!-- Slide 5 : Documents d'audit -->
+    <section>
+      <div class="content-slide">
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
+        <p class="slide-eyebrow">03 — Documents d'audit</p>
+        <h1 class="slide-title">Documents d'audit à considérer comme données internes</h1>
+        <p class="subhead">Préparation et déroulement de l'audit</p>
+        <ul class="efk-list">
+          <li>Documents classés au moins comme interne par l'audité, remis par l'audité ou un tiers.</li>
+          <li>Données classées au moins comme interne par l'audité, remises par l'audité ou un tiers.</li>
+          <li>Données relevées par le CDF, jusqu'à une décision de déclassement.</li>
+          <li>Notes d'entretien ou procès-verbaux d'entretiens.</li>
+          <li>Synthèses intermédiaires, documents de résultats.</li>
+        </ul>
+        <div class="callout"><b>Exception</b> : usage de l'IA possible si impératif (méthode ou délai) et anonymisation complète des sources garantie.</div>
+        <p class="subhead">Phase de rapport</p>
+        <ul class="efk-list" style="margin-bottom: 0;">
+          <li>Projets de rapport jusqu'à la version V02 incluse (version définitive pour le CDF, sans les prises de position).</li>
+        </ul>
+        <div class="slide-footer">Règles d'utilisation de l'IA dans le CDF | [Lieu] | [Date]</div>
+      </div>
+    </section>
+
+    <!-- Slide 6 : Autres documents -->
+    <section>
+      <div class="content-slide">
+        <img class="slide-logo" src="../assets/efk/logo.svg" alt="EFK">
+        <p class="slide-eyebrow">04 — Autres documents</p>
+        <h1 class="slide-title">Autres documents du CDF à considérer comme documents internes</h1>
+        <ul class="efk-list">
+          <li><b>Obligatoire</b> — tous les dossiers relatifs au personnel.</li>
+          <li><b>Au&nbsp;cas&nbsp;par&nbsp;cas</b> — documents relatifs aux processus et à l'organisation interne considérés comme sans importance.</li>
+        </ul>
+        <div class="slide-footer">Règles d'utilisation de l'IA dans le CDF | [Lieu] | [Date]</div>
+      </div>
+    </section>
+
+    <!-- Slide 7 : Clôture — Questions -->
+    <section>
+      <div class="content-slide closing">
+        <h1 class="slide-title">Avez-vous des questions ?</h1>
+        <img class="closing-icon" src="../assets/efk/icon-questions.svg" alt="">
+      </div>
+    </section>
+
+    <!-- Slide 8 : Clôture — Remerciement -->
+    <section>
+      <div class="content-slide closing">
+        <h1 class="slide-title">Merci de votre attention</h1>
+        <img class="closing-icon" src="../assets/efk/icon-attention-ear-eye.svg" alt="">
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 720,
+    margin: 0,
+    center: false,
+    hash: true,
+    controls: true,
+    progress: true,
+    slideNumber: 'c/t',
+    transition: 'fade'
+  });
+</script>
