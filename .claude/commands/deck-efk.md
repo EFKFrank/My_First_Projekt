@@ -104,7 +104,7 @@ Si un de ces fichiers manque (nouveau dépôt, copie partielle), recrée-le à l
 - Marge gauche/droite du bloc de contenu : ~0.88 in (≈ 45px, en pratique le gabarit utilise 90px de marge sur les slides de contenu).
 - Logo EFK (`assets/efk/logo.svg`) : en haut à droite de chaque slide de **contenu** (~62×60px) — position officielle, ne pas le mettre à gauche sauf demande explicite.
 - Pied de page sur chaque slide de contenu : à gauche `Titre | Lieu | Date | Prénom Nom`, à droite le numéro de slide — texte petit, gris.
-- Titre de slide toujours aligné à gauche, jamais centré (sauf sous-titre de couverture, voir plus bas) — y compris sur la couverture et les slides de clôture : le titre est en haut/à gauche, ce n'est plus un bloc centré au milieu de l'écran.
+- Titre de slide toujours aligné à gauche, jamais centré horizontalement (sauf sous-titre de couverture, voir plus bas). Sur les slides de contenu et la couverture, le titre est en haut. Sur les slides de **clôture** uniquement, le titre reste à gauche mais est centré **verticalement** dans la hauteur de la slide (pas collé en haut) — voir types de slides 6/7.
 
 #### Couverture : positions exactes des 15 pictogrammes
 Le gabarit officiel positionne les 15 pictogrammes métier de façon précise et non aléatoire sur la couverture "avec icônes" — reproduis ces positions et tailles exactement (en px, canevas 1280×720) :
@@ -135,8 +135,8 @@ Ce nuage d'icônes occupe la moitié inférieure de la slide (sous le titre/sous
 3. **Titre + contenu** — titre noir en haut, corps de texte/liste à puces en dessous (jusqu'à 3 niveaux d'indentation).
 4. **Deux contenus** — deux colonnes de contenu côte à côte sous un même titre.
 5. **Comparaison** — deux colonnes avec chacune un sous-titre + contenu (pour comparer deux options/concepts).
-6. **Clôture — Questions** — fond gris, titre bleu **en haut à gauche** "Avez-vous des questions ?", icône `assets/efk/icon-questions.svg` **large (≥ 220px) et à droite**, verticalement centrée. Pas de pied de page.
-7. **Clôture — Remerciement** — même structure que Questions : titre bleu en haut à gauche "Merci de votre attention", icône (`icon-attention-ear-eye.svg` ou `icon-attention-smiley.svg`) large (≥ 220px) et à droite. Pas de pied de page.
+6. **Clôture — Questions** — fond gris, titre bleu **à gauche, centré verticalement** (le conteneur de la slide utilise `display:flex; align-items:center;`) "Avez-vous des questions ?", icône `assets/efk/icon-questions.svg` **large (360px) et à droite**, verticalement centrée (`position:absolute; top:50%; transform:translateY(-50%);`). Pas de pied de page.
+7. **Clôture — Remerciement** — même structure que Questions : titre bleu à gauche centré verticalement "Merci de votre attention", icône (`icon-attention-ear-eye.svg` ou `icon-attention-smiley.svg`) large (360px) et à droite. Pas de pied de page.
 
 Choisis le type de slide le plus adapté à chaque section du contenu fourni ; ne force pas tout dans un seul type. Une présentation se termine typiquement par les deux slides de clôture (Questions puis Remerciement), dans cet ordre ou l'inverse selon la préférence de l'utilisateur.
 
